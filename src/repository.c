@@ -1394,8 +1394,13 @@ static int check_valid_extension(const git_config_entry *entry, void *payload)
 	 * !!! DO NOT UPSTREAM !!!
 	 * 
 	 */
+	/*
+	 * Partial clones should work for git status, as we only deal with the
+	 * working tree, which should have all the objects needed.
+	 */
 	if (!strcmp(entry->name, "extensions.noop") ||
-	    !strcmp(entry->name, "extensions.preciousobjects"))
+	    !strcmp(entry->name, "extensions.preciousobjects") ||
+	    !strcmp(entry->name, "extensions.partialclone"))
 		return 0;
 
 	git_error_set(GIT_ERROR_REPOSITORY, "unsupported extension name %s", entry->name);
